@@ -1,1 +1,50 @@
-<app-product-card></app-product-card>
+<div
+	*ngIf="products$ | async as products; else loader"
+	class="scroll-container"
+>
+	<ng-container
+		*appPagination="
+			let productsGroup of products | filterByParam : '' : 'name';
+			elementsSize: 4;
+			let allIndexes = allIndexes;
+			let activeIndex = index;
+			let next = next;
+			let back = back;
+			let selectIndex = selectIndex
+		"
+	>
+		<div class="card-container">
+			<app-product-card
+				*ngFor="
+					let product of productsGroup;
+					let index = index;
+					trackBy: trackById
+				"
+				class="product"
+				[product]="product"
+			></app-product-card>
+		</div>
+
+		<div class="pagination-container">
+			<button mat-icon-button (click)="back()">
+				<mat-icon> chevron_left </mat-icon>
+			</button>
+			<button
+				*ngFor="let index of allIndexes"
+				mat-icon-button
+				class="pagination__page-number"
+				[class.pagination__page-number_active]="activeIndex === index"
+				(click)="selectIndex(index)"
+			>
+				{{ index + 1 }}
+			</button>
+			<button mat-icon-button (click)="next()">
+				<mat-icon> chevron_right </mat-icon>
+			</button>
+		</div>
+	</ng-container>
+</div>
+
+<ng-template #loader>
+	<mat-spinner></mat-spinner>
+</ng-template>
