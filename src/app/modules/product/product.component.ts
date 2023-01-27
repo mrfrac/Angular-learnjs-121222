@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Observable, of, switchMap, tap } from 'rxjs';
-import { IProduct } from '../../shared/products/product.interface';
+import { filter, map, switchMap, tap } from 'rxjs';
 import { ProductsStoreService } from '../../shared/products/products-store.service';
-import { productsMock } from '../../shared/products/products.mock';
 
 @Component({
 	selector: 'app-product',
@@ -12,5 +10,17 @@ import { productsMock } from '../../shared/products/products.mock';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent {
-	readonly product$ = of(productsMock[0]);
+	readonly product$ = this.activatedRoute.paramMap.pipe(
+		map(paramMap => paramMap.get('id')),
+		filter(Boolean),
+		tap(id => {
+			this.productsStoreService.loadProduct(id);
+		}),
+		switchMap(() => this.productsStoreService.product$),
+	);
+
+	constructor(
+		private readonly activatedRoute: ActivatedRoute,
+		private readonly productsStoreService: ProductsStoreService,
+	) {}
 }

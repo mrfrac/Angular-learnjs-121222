@@ -6,8 +6,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
-import { ToJsonModule } from '../../shared/to-json/to-json.module';
 import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-param.module';
+import { RouterModule } from '@angular/router';
+import { ProductsListRoutingModule } from './products-list-routing.module';
+import { ProductsFilterModule } from './products-filter/products-filter.module';
 
 @NgModule({
 	declarations: [ProductsListComponent],
@@ -19,6 +21,9 @@ import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-para
 		MatButtonModule,
 		PaginationModule,
 		FilterByParamModule,
+		RouterModule,
+		ProductsListRoutingModule,
+		ProductsFilterModule,
 	],
 	exports: [ProductsListComponent],
 })

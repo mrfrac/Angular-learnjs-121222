@@ -4,16 +4,11 @@ import { SidenavComponent } from './sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { CategoriesSelectModule } from './categories-select/categories-select.module';
 
 @NgModule({
 	declarations: [SidenavComponent],
-	imports: [CommonModule, MatSidenavModule, MatButtonModule, MatListModule],
+	imports: [CommonModule, MatSidenavModule, MatButtonModule, MatListModule, CategoriesSelectModule],
 	exports: [SidenavComponent],
-	providers: [
-		{
-			provide: 'name',
-			useValue: 'SidenavModuleInjector',
-		},
-	],
 })
 export class SidenavModule {}
